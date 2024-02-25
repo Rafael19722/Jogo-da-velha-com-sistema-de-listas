@@ -1,0 +1,116 @@
+import random
+tabuleiro = [['*' for i in range(1, 4)]for j in range(1, 4)]
+jogos_ganhos_x = [['X', 'X', 'X']]
+jogos_ganhos_o = [['O', 'O', 'O']]
+
+
+def printar_tabuleiro():
+    print(tabuleiro[2])
+    print(tabuleiro[1])
+    print(tabuleiro[0])
+
+
+def exemplo_calculadora():
+    calculadora = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+    print(calculadora[2])
+    print(calculadora[1])
+    print(calculadora[0])
+
+
+print('Olá seja bem vindo ao jogo da velha em python,você jogador será o X e o computador será O')
+printar_tabuleiro()
+print('Este é o tabulero atual! com os espaços vazios!\n'
+      f'Para você ter uma uma noção de como jogar pense na forma das teclas de uma calculadora:')
+exemplo_calculadora()
+print('Você terá apenas que dizer em qual numero você quer por a sua marca.\nEntão VAMOS COMEÇAR!')
+print('/*' * 20)
+print()
+print('Vamos começar, novamente este é o tabuleiro atual:')
+printar_tabuleiro()
+
+
+def escolha_player():
+    while True:
+        while True:
+            try:
+                escolha_jogador = int(input('Escolha um lugar para por a marca: '))
+            except ValueError as err:
+                print('Este valor não é válido')
+            else:
+                break
+        if int(escolha_jogador) not in range(1, 10):
+            print('Este não é um número válido!')
+        else:
+            break
+    while True:
+        if escolha_jogador in [1, 2, 3]:
+            if 'X' in tabuleiro[0][escolha_jogador - 1] or 'O' in tabuleiro[0][escolha_jogador - 1]:
+                print('Já jogaram neste quadrante, tente outro número!')
+                escolha_jogador = int(input('Escolha um lugar para por a marca: '))
+            else:
+                tabuleiro[0][escolha_jogador - 1] = 'X'
+                break
+        if escolha_jogador in [4, 5, 6]:
+            if 'X' in tabuleiro[1][escolha_jogador - 4] or 'O' in tabuleiro[1][escolha_jogador - 4]:
+                print('Já jogaram neste quadrante, tente outro número!')
+                escolha_jogador = int(input('Escolha um lugar para por a marca: '))
+            else:
+                tabuleiro[1][escolha_jogador - 4] = 'X'
+                break
+        if escolha_jogador in [7, 8, 9]:
+            if 'X' in tabuleiro[2][escolha_jogador - 7] or 'O' in tabuleiro[2][escolha_jogador - 7]:
+                print('Já jogaram neste quadrante, tente outro número!')
+                escolha_jogador = int(input('Escolha um lugar para por a marca: '))
+            else:
+                tabuleiro[2][escolha_jogador - 7] = 'X'
+                break
+
+
+def escolha_bot():
+    while True:
+        escolha_bot = random.choice(range(1, 10))
+        if escolha_bot in [1, 2, 3]:
+            if 'X' in tabuleiro[0][escolha_bot - 1] or 'O' in tabuleiro[0][escolha_bot - 1]:
+                pass
+            else:
+                tabuleiro[0][escolha_bot - 1] = 'O'
+                break
+        if escolha_bot in [4, 5, 6]:
+            if 'X' in tabuleiro[1][escolha_bot - 4] or 'O' in tabuleiro[1][escolha_bot - 4]:
+                pass
+            else:
+                tabuleiro[1][escolha_bot - 4] = 'O'
+                break
+        if escolha_bot in [7, 8, 9]:
+            if 'X' in tabuleiro[2][escolha_bot - 7] or 'O' in tabuleiro[2][escolha_bot - 7]:
+                pass
+            else:
+                tabuleiro[2][escolha_bot - 7] = 'O'
+                break
+
+
+cont = 0
+while True:
+    escolha_player()
+    if jogos_ganhos_x[0] in tabuleiro or 'X' in tabuleiro[0][0] and 'X' in tabuleiro[1][1] and 'X' in tabuleiro[2][2]\
+            or 'X' in tabuleiro[0][2] and 'X' in tabuleiro[1][1] and 'X' in tabuleiro[2][0] or 'X' in tabuleiro[0][0]\
+            and 'X' in tabuleiro[1][0] and 'X' in tabuleiro[2][0] or 'X' in tabuleiro[0][1]\
+            and 'X' in tabuleiro[1][1] and 'X' in tabuleiro[2][1] or 'X' in tabuleiro[0][2]\
+            and 'X' in tabuleiro[1][2] and 'X' in tabuleiro[2][2]:
+        printar_tabuleiro()
+        print('O jogador ganhou')
+        break
+    if cont < 4:
+        escolha_bot()
+    printar_tabuleiro()
+    cont += 1
+    if jogos_ganhos_o[0] in tabuleiro or 'O' in tabuleiro[0][0] and 'O' in tabuleiro[1][1] and 'O' in tabuleiro[2][2]\
+            or 'O' in tabuleiro[0][2] and 'O' in tabuleiro[1][1] and 'O' in tabuleiro[2][0] or 'O' in tabuleiro[0][0]\
+            and 'O' in tabuleiro[1][0] and 'O' in tabuleiro[2][0] or 'O' in tabuleiro[0][1]\
+            and 'O' in tabuleiro[1][1] and 'O' in tabuleiro[2][1] or 'O' in tabuleiro[0][2]\
+            and 'O' in tabuleiro[1][2] and 'O' in tabuleiro[2][2]:
+        print('O bot ganhou')
+        break
+    if cont == 5:
+        print('Deu velha!')
+        break
